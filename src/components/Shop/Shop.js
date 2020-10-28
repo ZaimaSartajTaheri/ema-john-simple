@@ -14,8 +14,9 @@ const Shop = () => {
     //const first10=fakeData.slice(0,10);
     const [products,setProducts]=useState([]);
     const [cart,setCart]=useState([]);
+    const [search, setSearch] = useState('');
     useEffect(()=>{
-        fetch('https://hidden-sea-98559.herokuapp.com/products')
+        fetch('https://hidden-sea-98559.herokuapp.com/products?search='+search)
         .then(res=>res.json())
         .then(data=>setProducts(data))
     },[])
@@ -56,9 +57,13 @@ const handelAddProduct =(product)=>{
 
   
 }
+const handleSearch = event =>{
+    setSearch(event.target.value);
+}
     return (
         <div className='shop-container'>
             <div className='product-container'>
+            <input type="text" onBlur={handleSearch} placeholder="search product"/>
                 {
                   products.map(pd=><Product showAddToCart={true} product={pd} handelAddProduct={handelAddProduct}></Product>)
                 }
